@@ -1,5 +1,5 @@
-#ifndef visualization
-#define visualization
+#ifndef __VISUALIZATION_H
+#define __VISUALIZATION_H
 
 #ifndef _XTAL_FREQ 
 #define _XTAL_FREQ 8000000

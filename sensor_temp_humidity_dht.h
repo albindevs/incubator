@@ -1,5 +1,5 @@
-#ifndef dht
-#define dht
+#ifndef __SENSOR_TEMP_HUMIDITY_DHT_H
+#define __SENSOR_TEMP_HUMIDITY_DHT_H
 
 #ifndef _XTAL_FREQ 
 #define _XTAL_FREQ 8000000
