@@ -12,9 +12,16 @@
 unsigned char T_Byte1, T_Byte2, RH_Byte1, RH_Byte2, CheckSum ;
 unsigned int Temp, RH;
 
-void dht_start_Signal(void);
+typedef struct {
+	int temperature;
+	int relative_humidity; 
+} AmbientVariables;
 
-__bit dht_get_Results();
+
+AmbientVariables dht_get_ambient_vars();
+
+
+void start_Signal(void);
 
 __bit Check_Response();
 
@@ -22,7 +29,7 @@ __bit Read_Data(unsigned char* dht_data);
 
 __bit check_valid_results();
 
-void format_results();
+AmbientVariables get_converted_results();
 
 
 #endif

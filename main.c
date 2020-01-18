@@ -12,14 +12,11 @@
 */
 
 #include <xc.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <plib\i2c.h>
 #include <delays.h>
 #include "conf(8MHzINT2550).h"
-#include "lcd.h"
-#include "sensor_temp_humidity_dht.h"
 #include "visualization.h"
+#include "sensor_temp_humidity_dht.h"
+#include "real_time_clock.h"
 
 
 
@@ -34,7 +31,7 @@ void blinkLED() {
   __delay_ms(500);
 }
 
-void configuracion_de_puertos(){
+void ports_configuration(){
     OSCCON  = 0b01110010;//oscilador interno a 8MHz
     ADCON1  = 0X0F;
     TRISA   = 0;
@@ -46,19 +43,20 @@ void configuracion_de_puertos(){
 }
 
 void main(void) {
-  configuracion_de_puertos();
+  ports_configuration();
   OpenXLCD(FOUR_BIT & LINES_5X7);
-
+  rtc_start();
   __delay_ms(1000);
   
   while (1) {
     blinkLED();
 
-    dht_start_Signal();
+    AmbientVariables ambient_vars = dht_get_ambient_vars();
 
-    if (dht_get_Results()) {
-      print_interface();
+    if (ambient_vars.temperature) {
+      print_interface(ambient_vars);
     }
+    
     TMR1ON = 0;
     __delay_ms(1000);
   } 

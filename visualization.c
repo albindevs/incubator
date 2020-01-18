@@ -5,32 +5,32 @@
 
 
 
-void print_interface(){
-	format_temp_and_RH();
+void print_interface(AmbientVariables ambient_vars){
+	format_temp_and_RH(ambient_vars);
 	LCD_out(1,1,Temperature);
     LCD_out(2,1,Humidity);
 }
 
-void format_temp_and_RH(){
-	if (Temp > 0X8000)
+void format_temp_and_RH(AmbientVariables ambient_vars){
+	if (ambient_vars.temperature > 0X8000)
 	{                         // if temperature < 0
 	  Temperature[6] = '-';   // put minus sign '-'
-	  Temp = Temp & 0X7FFF;
+	  ambient_vars.temperature = ambient_vars.temperature & 0X7FFF;
 	}else {
 	  Temperature[6] = ' ';  // put space ' '
-	  Temperature[7]  = (Temp / 100) % 10  + '0';
-	  Temperature[8]  = (Temp / 10) % 10   + '0';
-	  Temperature[10] =  Temp % 10  + '0';
+	  Temperature[7]  = (ambient_vars.temperature / 100) % 10  + '0';
+	  Temperature[8]  = (ambient_vars.temperature / 10) % 10   + '0';
+	  Temperature[10] =  ambient_vars.temperature % 10  + '0';
 	  Temperature[11] = 223;    // put degree symbol (°)
 	}
 
-	if(RH == 1000) {
+	if(ambient_vars.relative_humidity == 1000) {
 	  Humidity[6]  = 1 + '0';   // put 1 of hundreds
 	}else {
 	  Humidity[6]  = ' ';       // put space ' '
-	  Humidity[7]  = (RH / 100) % 10 + '0';
-	  Humidity[8]  = (RH / 10) % 10  + '0';
-	  Humidity[10] = RH % 10 + '0';
+	  Humidity[7]  = (ambient_vars.relative_humidity / 100) % 10 + '0';
+	  Humidity[8]  = (ambient_vars.relative_humidity / 10) % 10  + '0';
+	  Humidity[10] = ambient_vars.relative_humidity % 10 + '0';
 	}
 }
 
