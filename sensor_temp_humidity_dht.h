@@ -17,8 +17,7 @@ typedef struct {
 	int relative_humidity; 
 } AmbientVariables;
 
-
-AmbientVariables dht_get_ambient_vars();
+__bit dht_get_ambient_vars(char* temperature, char* relative_humidity);
 
 
 void start_Signal(void);
@@ -29,7 +28,7 @@ __bit Read_Data(unsigned char* dht_data);
 
 __bit check_valid_results();
 
-AmbientVariables get_converted_results();
+void get_converted_results(char* temperature, char* relative_humidity);
 
 
 #endif

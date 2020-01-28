@@ -6,37 +6,34 @@
 
 
 
-AmbientVariables dht_get_ambient_vars() {
+__bit dht_get_ambient_vars(char* temperature, char* relative_humidity) {
   start_Signal();
-
-  AmbientVariables null_values;
-  null_values.temperature = NULL;
-  null_values.relative_humidity = NULL;
   
   if (!Check_Response()){          
     LCD_clr();
     LCD_out(1,1,"Sin respuesta");
     LCD_out(2,1,"del sensor.");
-    return null_values;
+    return 0;
   }
 
   if (Read_Data(&RH_Byte1) || Read_Data(&RH_Byte2) || Read_Data(&T_Byte1) 
     || Read_Data(&T_Byte2) || Read_Data(&CheckSum)){
     LCD_clr();
     LCD_out(1,1,"Tiempo terminado!");
-    return null_values;
+    return 0;
   }
 
-  char valid_results = check_valid_results();
-
-  if (!valid_results) {                
+  if (!check_valid_results()) {                
     LCD_clr();
     LCD_out(1,1,"Error en Checksum!");
-    return null_values;
+    return 0;
   }
 
-  AmbientVariables ambient_vars = get_converted_results();
-  return ambient_vars;
+  *relative_humidity = RH_Byte1;
+  *relative_humidity = (RH << 8) | RH_Byte2;
+  *temperature = T_Byte1;
+  *temperature = (Temp << 8) | T_Byte2;
+  return 1;
 }
 
 void start_Signal(void) {
@@ -116,14 +113,12 @@ __bit check_valid_results(){
   return 1;
 }
 
-AmbientVariables get_converted_results(){
-  AmbientVariables ambient_vars;
+void get_converted_results(char* temperature, char* relative_humidity){
   RH = RH_Byte1;
   RH = (RH << 8) | RH_Byte2;
   Temp = T_Byte1;
   Temp = (Temp << 8) | T_Byte2;
 
-  ambient_vars.temperature = Temp;
-  ambient_vars.relative_humidity = RH;
-  return ambient_vars;
+  *temperature = Temp;
+  *relative_humidity = RH;
 }
