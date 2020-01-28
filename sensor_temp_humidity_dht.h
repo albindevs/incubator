@@ -10,14 +10,14 @@
 #define DHT22_PIN_DIR  TRISCbits.RC0
 
 unsigned char T_Byte1, T_Byte2, RH_Byte1, RH_Byte2, CheckSum ;
-unsigned int Temp, RH;
 
 typedef struct {
 	int temperature;
 	int relative_humidity; 
 } AmbientVariables;
 
-__bit dht_get_ambient_vars(char* temperature, char* relative_humidity);
+
+AmbientVariables dht_get_ambient_vars();
 
 
 void start_Signal(void);
@@ -28,7 +28,6 @@ __bit Read_Data(unsigned char* dht_data);
 
 __bit check_valid_results();
 
-void get_converted_results(char* temperature, char* relative_humidity);
 
 
 #endif

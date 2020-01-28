@@ -9,9 +9,9 @@
 #include "real_time_clock.h"
 
 
-void format_temp_and_RH(char temperature, char relative_humidity);
+void format_temp_and_RH(AmbientVariables av);
 void format_datetime(DateTime datetime);
 
-void display_interface(char temperature, char relative_humidity, DateTime datetime);
+void display_interface(AmbientVariables av, DateTime datetime);
 
 #endif

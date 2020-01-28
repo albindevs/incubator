@@ -24,8 +24,8 @@
 #define _XTAL_FREQ 8000000
 #define Break_point_LED PORTBbits.RB2
 
-char temperature, relative_humidity;
-static DateTime datetime;
+DateTime datetime;
+AmbientVariables ambient_variables;
 
 
 
@@ -52,10 +52,11 @@ void ports_configuration(){
 
 void incubator(){
     datetime  = rtc_get_datetime();
+    ambient_variables = dht_get_ambient_vars();
 
     blinkLED();
-    if (dht_get_ambient_vars(&temperature, &relative_humidity) && datetime.minutes) {
-      display_interface(temperature, relative_humidity, datetime);
+    if (datetime.minutes && ambient_variables.temperature) {
+        display_interface(ambient_variables, datetime);
     }
     __delay_ms(1000);
 }
