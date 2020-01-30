@@ -60,14 +60,7 @@ void data_display(){
         datetime = rtc_get_datetime();
         display_interface(ambient_variables, datetime);
 
-        __delay_ms(1000);
-        if (BACK_BUTTON == 1){
-            __delay_ms(WAIT_TIME_MS);
-            if (BACK_BUTTON == 1){
-                break;
-            }
-        }
-        __delay_ms(1000); // dht device needs a 2 seconds wait for new reading
+        __delay_ms(2000);
         if (BACK_BUTTON == 1){
             __delay_ms(WAIT_TIME_MS);
             if (BACK_BUTTON == 1){
