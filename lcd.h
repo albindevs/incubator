@@ -149,4 +149,8 @@ void say_hello(void);
 #define LCD_clr() WriteCmdXLCD(0x00)
 #endif
 
+#ifndef LCD_cursor_off()
+#define LCD_cursor_off() WriteCmdXLCD(CURSOR_OFF)
+#endif
+
 #endif

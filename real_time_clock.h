@@ -39,6 +39,8 @@ char convert_bdc_to_bin(char data_byte);
 char rtc_read(char address);
 
 
+void rtc_set_datetime(DateTime datetime);
+
 void rtc_set_minutes(char minutes);
 void rtc_set_hours(char hours);
 void rtc_set_day(char day);

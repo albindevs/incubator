@@ -3,16 +3,42 @@
 #include "sensor_temp_humidity_dht.h"
 #include "visualization.h"
 
+char Menu_selection_1[] 	= " Mostrar datos ";
+char Menu_selection_2[]		= " Config fecha  ";
 
 char Temperature_str[]      = "Temp = 00.0 C  ";
 char Humidity_str[]         = "RH   = 00.0 %  ";
-char DateTime_str[]    	= "  /  /     :   ";
+char DateTime_str[]    		= "  /  /     :   ";
 
+
+void display_menu(char selector){
+	if (selector == 0)
+	{
+		Menu_selection_1[0] = '>';
+		Menu_selection_2[0] = ' ';
+	}
+	if (selector == 1)
+	{
+		Menu_selection_1[0] = ' ';
+		Menu_selection_2[0] = '>';
+	}
+	LCD_out(1,0, Menu_selection_1);
+	LCD_out(2,0, Menu_selection_2);
+
+}
 void display_interface(AmbientVariables av, DateTime datetime){
 	format_temp_and_RH(av);
 	format_datetime(datetime);
-	LCD_out(1,1,Temperature_str);
-    LCD_out(2,1,DateTime_str);
+	LCD_out(1,0,Temperature_str);
+    LCD_out(2,0,DateTime_str);
+}
+
+void display_datetime_setting(DateTime datetime, char position){
+	char selector_str[]    	= "               ";
+	selector_str[position] = '^';
+	format_datetime(datetime);
+	LCD_out(1,0,DateTime_str);
+	LCD_out(2,0,selector_str);
 }
 
 void format_temp_and_RH(AmbientVariables av){
@@ -59,4 +85,5 @@ void format_datetime(DateTime datetime){
 	DateTime_str[12] = (datetime.minutes / 10) % 10  + '0';
 	DateTime_str[13] = (datetime.minutes % 10) + '0';
 }
+
 

@@ -85,6 +85,13 @@ char rtc_read(char address){
 	return resultI2C;
 }
 
+void rtc_set_datetime(DateTime datetime){
+	rtc_set_minutes(datetime.minutes);
+	rtc_set_hours(datetime.hours);
+	rtc_set_date(datetime.date);
+	rtc_set_month(datetime.month);
+	rtc_set_year(datetime.year);
+}
 
 void rtc_set_minutes(char minutes){
 	char bcd_minutes = convert_byte_to_bcd(minutes);
@@ -118,7 +125,7 @@ void rtc_set_year(char year){
 char convert_byte_to_bcd(char data_byte){
 	char a = data_byte%10;            
 	char b = (data_byte/10)%10;
-	b << 4; 
+	b = b << 4;
 	return b|a;       
 }
 
