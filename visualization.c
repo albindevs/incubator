@@ -3,13 +3,16 @@
 #include "sensor_temp_humidity_dht.h"
 #include "visualization.h"
 
-char Menu_selection_1[] 	= " Mostrar datos ";
-char Menu_selection_2[]		= " Config fecha  ";
+char Menu_selection_1[] 		= " Incubadora    ";
+char Menu_selection_2[]			= " Config fecha  ";
 
-char Temperature_str[]      = "Temp = 00.0 C  ";
-char Humidity_str[]         = "RH   = 00.0 %  ";
-char DateTime_str[]    		= "  /  /     :   ";
+char Temperature_str[]      	= "Temp = 00.0 C  ";
+char Humidity_str[]        	 	= "RH   = 00.0 %  ";
 
+char DateTime_str[]    			= "  /  /     :   ";
+
+char Incubator_info_line_1[]	= "  Incubadora   ";
+char Incubator_info_line_2[]  	= "               ";
 
 void display_menu(char selector){
 	if (selector == 0)
@@ -26,11 +29,17 @@ void display_menu(char selector){
 	LCD_out(2,0, Menu_selection_2);
 
 }
+
 void display_interface(AmbientVariables av, DateTime datetime){
 	format_temp_and_RH(av);
 	format_datetime(datetime);
 	LCD_out(1,0,Temperature_str);
     LCD_out(2,0,DateTime_str);
+}
+
+void display_incubator_interface(){
+	LCD_out(1,0,Incubator_info_line_1);
+    LCD_out(2,0,Incubator_info_line_2);
 }
 
 void display_datetime_setting(DateTime datetime, char position){

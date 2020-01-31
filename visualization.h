@@ -11,14 +11,15 @@
 
 
 void display_menu(char selector);
+
 void display_interface(AmbientVariables av, DateTime datetime);
+
+void display_incubator_interface();
+
 void display_datetime_setting(DateTime datetime, char position);
+
 
 void format_temp_and_RH(AmbientVariables av);
 void format_datetime(DateTime datetime);
-
-
-
-
 
 #endif

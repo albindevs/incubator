@@ -19,21 +19,15 @@
 #include "visualization.h"
 #include "sensor_temp_humidity_dht.h"
 #include "real_time_clock.h"
+#include "incubator.h"
 #include "time.h"
 
-
-
 #define _XTAL_FREQ 8000000
-
 #define Break_point_LED PORTBbits.RB2
-
 
 DateTime datetime;
 AmbientVariables ambient_variables;
-
 char screen_selector = 0;
-
-
 
 void blinkLED() {
     Break_point_LED = 1;
@@ -88,7 +82,7 @@ void program(){
         __delay_ms(WAIT_TIME_MS);
         if (OK_BUTTON == 1){
 
-            if(screen_selector == 0) data_display();
+            if(screen_selector == 0) run_incubator();
             if(screen_selector == 1) set_datetime();
         }
     }
