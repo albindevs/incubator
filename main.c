@@ -48,23 +48,6 @@ void ports_configuration(){
     TMR1L   = 0;
 }
 
-void data_display(){
-    while(1){
-        ambient_variables = dht_get_ambient_vars();
-        datetime = rtc_get_datetime();
-        display_interface(ambient_variables, datetime);
-
-        __delay_ms(2000);
-        if (BACK_BUTTON == 1){
-            __delay_ms(WAIT_TIME_MS);
-            if (BACK_BUTTON == 1){
-                break;
-            }
-        }
-    }
-}
-
-
 void program(){
     display_menu(screen_selector);
 
