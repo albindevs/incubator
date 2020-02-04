@@ -16,8 +16,9 @@ typedef struct
 	char normal_temperature;
 	char normal_humidity;
 	char normal_humidity_last_3_days;
-} IncubationParameters ;
+} IncubationParameters;
 
+IncubationParameters get_incubation_parameters_by_egg_type(char n);
 
 void run_incubator();
 

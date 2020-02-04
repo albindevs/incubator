@@ -66,7 +66,7 @@ void program(){
         if (OK_BUTTON == 1){
 
             if(screen_selector == 0) run_incubator();
-            if(screen_selector == 1) set_datetime();
+            if(screen_selector == 1) interface_set_datetime();
         }
     }
 

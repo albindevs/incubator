@@ -2,6 +2,9 @@
 #include "buttons.h"
 #include "visualization.h"
 #include "real_time_clock.h"
+#include "incubator.h"
+
+char selector;
 
 void run_incubator(){
 	selector = 0;
@@ -28,4 +31,18 @@ void run_incubator(){
 	        }
 	    }
 	}
+}
+
+IncubationParameters get_incubation_parameters_by_egg_type(char n){
+	IncubationParameters ip;
+
+	if (n == 1)
+	{
+		ip.incubation_days = CHICK_EGG_INCUBATION_DAYS;
+		ip.normal_temperature = CHICK_EGG_TEMPERATURE;
+		ip.normal_humidity = CHICK_EGG_RELATIVE_HUMIDITY;
+		ip.normal_humidity_last_3_days = CHICK_EGG_RELATIVE_HUMIDITY_LAST_3_DAYS;
+	}
+
+	return ip;
 }
