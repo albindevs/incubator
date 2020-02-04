@@ -3,11 +3,6 @@
 #include "visualization.h"
 #include "real_time_clock.h"
 
-static char selector;
-static char total_days;
-static char normal_temperature;
-static char normal_RH;
-
 void run_incubator(){
 	selector = 0;
 
