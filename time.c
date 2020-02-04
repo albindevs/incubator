@@ -1,10 +1,11 @@
 #include <xc.h>
 #include "buttons.h"
+#include "time.h"
 #include "lcd.h"
 #include "visualization.h"
 #include "real_time_clock.h"
 
-void set_datetime(){
+void interface_set_datetime(){
 	char position = 1;
 	DateTime datetime;
 	datetime  = rtc_get_datetime();
@@ -123,4 +124,35 @@ void set_datetime(){
 
         display_datetime_setting(datetime, position);
 	}	
+}
+
+DateTime calculate_date_when_n_days_passed(DateTime current_datetime, char days){
+    DateTime datetime = current_datetime;
+    char days_left_in_the_month = NULL;
+
+    for (char i = 0; i < 9; ++i){
+        if (datetime.year == leap_years_until_2050[i]){
+            days_left_in_the_month = leap_year_days_by_month[datetime.month - 1] - datetime.date;
+            break;
+        }
+    }
+
+    if (days_left_in_the_month == NULL){
+        days_left_in_the_month = normal_year_days_by_month[datetime.month - 1] - datetime.date;
+    }
+
+    if (days_left_in_the_month >= days)
+    {
+        datetime.date += days;
+    } else {
+        if (datetime.month == 12){
+            datetime.year++;
+            datetime.month = 1;
+        }else{
+            datetime.month++;
+        }
+        datetime.date = days - days_left_in_the_month;        
+    }
+
+    return datetime;
 }
