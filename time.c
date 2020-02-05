@@ -157,6 +157,28 @@ DateTime calculate_date_when_n_days_passed(DateTime current_datetime, char days)
     return datetime;
 }
 
+char calculate_days_until_date(DateTime start_date, DateTime final_date){
+	char days_count = 0;
+	char days_left_in_the_month = NULL;
+
+	if (start_date.month == final_date.month){
+		days_count = final_date.date - start_date.date;
+		return days_count;
+	}
+
+	for (char i = 0; i < 9; ++i){
+		if (start_date.year == leap_years_until_2050[i]){
+			days_left_in_the_month = leap_year_days_by_month[start_date.month - 1] - start_date.date;
+			break;
+		}
+	}
+	if (days_left_in_the_month == NULL){
+		days_left_in_the_month = normal_year_days_by_month[start_date.month - 1] - start_date.date;
+	}
+
+	days_count = days_left_in_the_month + final_date.date;
+}
+
 __bit compare_datetimes(DateTime x, DateTime y){
     if (x.year  != y.year) return 0;
     if (x.month != y.month) return 0;

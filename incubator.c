@@ -8,6 +8,7 @@
 char selector;
 char incubation_process_status = 0;
 AmbientVariables ambient_variables;
+
 DateTime current_datetime, final_datetime;
 IncubationParameters incubation_parameters;
 
@@ -107,13 +108,18 @@ void run_incubator(){
 	Busy_eep();
 
 
-
     while(incubation_process_status){
     	ambient_variables = dht_get_ambient_vars();
     	current_datetime = rtc_get_datetime();
 
-    	display_Ambient_variables_in_first_line(ambient_variables);
-    	display_days_left_in_second_line(incubation_days);
+		if(incubation_days != calculate_days_until_date(current_datetime, final_datetime)){
+			incubation_days = calculate_days_until_date(current_datetime, final_datetime);
+			Write_b_eep(ADDRESS_INCUBATION_DAYS, incubation_days);
+			Busy_eep();
+		}
+
+		display_Ambient_variables_in_first_line(ambient_variables);
+		display_days_left_in_second_line(incubation_days, final_datetime.hours);
     	
     	if (compare_datetimes(current_datetime, final_datetime)){
     		display_incubation_ready();
@@ -121,6 +127,7 @@ void run_incubator(){
 			Busy_eep();
 			incubation_process_status = Read_b_eep(ADDRESS_INCUBATION_PROCESS_STATUS);
 			Busy_eep();
+
 			while(1){
 			    if (OK_BUTTON == 1){
 			        __delay_ms(WAIT_TIME_MS);
@@ -128,7 +135,6 @@ void run_incubator(){
 			        	break;
 			        }
 			    }
-				
 			    if (BACK_BUTTON == 1){
 			        __delay_ms(WAIT_TIME_MS);
 			        if (BACK_BUTTON == 1){
@@ -144,6 +150,7 @@ void run_incubator(){
 	        __delay_ms(WAIT_TIME_MS);
 	        if (BACK_BUTTON == 1){
 	        	display_incubator_canceling_confirmation();
+
 	        	__delay_ms(1000);
 	        	while(1){
 				    if (OK_BUTTON == 1){
@@ -156,7 +163,6 @@ void run_incubator(){
 							break;
 				        }
 				    }
-
 				    if (BACK_BUTTON == 1){
 				        __delay_ms(WAIT_TIME_MS);
 				        if (BACK_BUTTON == 1){

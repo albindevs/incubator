@@ -9,7 +9,7 @@ char Menu_selection_2[]				= " Config fecha   ";
 char Incubator_selection_line_1[]	= "> Huevos de     ";
 char Incubator_selection_line_2[]  	= "   Gallina      ";
 
-char Incubator_interface_cancel_confirmation_line_1[]	= "  ¿cancelar?    ";
+char Incubator_interface_cancel_confirmation_line_1[]	= "  ï¿½cancelar?    ";
 char Incubator_interface_cancel_confirmation_line_2[]  	= "  OK     Atras  ";
 
 
@@ -18,6 +18,7 @@ char DateTime_str[]    				= "  /  /     :    ";
 
 char Ambient_variables_status[]		= "T 00.0  HR 00.0%";
 char Incubation_days_left[]			= "    dias rest   ";
+char Incubation_hours_left[]		= "Term a las   :00";
 
 
 
@@ -47,10 +48,17 @@ void display_Ambient_variables_in_first_line(AmbientVariables av){
 	LCD_out(1,0,Ambient_variables_status);
 }
 
-void display_days_left_in_second_line(char days){
-	Incubation_days_left[1] = (days / 10) % 10  + '0';
-	Incubation_days_left[2] = (days % 10) + '0';
-	LCD_out(2,0,Incubation_days_left);
+void display_days_left_in_second_line(char days, char hours){
+	if(days == 0){
+		Incubation_hours_left[11] = (hours / 10) % 10 + '0';
+		Incubation_hours_left[12] = (hours % 10) + '0';
+		LCD_out(2, 0, Incubation_hours_left);
+	}else {
+		Incubation_days_left[1] = (days / 10) % 10  + '0';
+		Incubation_days_left[2] = (days % 10) + '0';
+		LCD_out(2,0,Incubation_days_left);
+	}
+	
 }
 
 void display_incubator_canceling_confirmation(){
