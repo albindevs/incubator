@@ -32,6 +32,9 @@
 #define TIME_TO_SPIN_IN_HOURS 6
 #define SPINNIG_DURATION_IN_MINUTES 36
 
+#define SPIN_MOTOR_PIN 		PORTBbits.RB5
+// #define DHT22_PIN_LAT LATCbits.LATC0
+
 typedef struct
 {
 	char incubation_days;

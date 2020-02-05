@@ -107,8 +107,7 @@ void run_incubator(){
 	final_datetime.hours = Read_b_eep(ADDRESS_HOUR_TO_FINISH);
 	Busy_eep();
 
-
-    while(incubation_process_status){
+	while(incubation_process_status){
     	ambient_variables = dht_get_ambient_vars();
     	current_datetime = rtc_get_datetime();
 
@@ -143,6 +142,21 @@ void run_incubator(){
 			    }
 			}
     	}
+
+
+		if (current_datetime.hours == 0 || current_datetime.hours == 6 || current_datetime.hours == 12 || current_datetime.hours == 18)
+		{
+			if (current_datetime.minutes < 36)
+			{
+				SPIN_MOTOR_PIN = 1;
+			}else
+			{
+				SPIN_MOTOR_PIN = 0;
+			}			
+		}
+		
+		
+
 
 
     	__delay_ms(2000);
