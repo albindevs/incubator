@@ -7,6 +7,7 @@
 
 char selector;
 char incubation_process_status = 0;
+AmbientVariables ambient_variables;
 DateTime current_date, final_date;
 IncubationParameters incubation_parameters;
 
@@ -108,8 +109,11 @@ void run_incubator(){
 
 
     while(incubation_process_status){
-    	display_incubator_interface(incubation_days);
+    	ambient_variables = dht_get_ambient_vars();
+    	display_Ambient_variables_in_first_line(ambient_variables);
+    	display_days_left_in_second_line(incubation_days);
 
+    	__delay_ms(2000);
 	    if (BACK_BUTTON == 1){
 	        __delay_ms(WAIT_TIME_MS);
 	        if (BACK_BUTTON == 1){
