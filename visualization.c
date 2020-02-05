@@ -3,21 +3,21 @@
 #include "sensor_temp_humidity_dht.h"
 #include "visualization.h"
 
-char Menu_selection_1[] 			= " Incubadora    ";
-char Menu_selection_2[]				= " Config fecha  ";
+char Menu_selection_1[] 			= " Incubadora     ";
+char Menu_selection_2[]				= " Config fecha   ";
 
-char Incubator_selection_line_1[]	= "> Huevos de    ";
-char Incubator_selection_line_2[]  	= "   Gallina     ";
+char Incubator_selection_line_1[]	= "> Huevos de     ";
+char Incubator_selection_line_2[]  	= "   Gallina      ";
 
-char Incubator_interface_cancel_confirmation_line_1[]	= "  ¿cancelar?   ";
-char Incubator_interface_cancel_confirmation_line_2[]  	= "  OK     Atras ";
+char Incubator_interface_cancel_confirmation_line_1[]	= "  ¿cancelar?    ";
+char Incubator_interface_cancel_confirmation_line_2[]  	= "  OK     Atras  ";
 
 
-char DateTime_str[]    				= "  /  /     :   ";
+char DateTime_str[]    				= "  /  /     :    ";
 
 
 char Ambient_variables_status[]		= "T 00.0  HR 00.0%";
-char Incubation_days_left[]			= "    dias rest  ";
+char Incubation_days_left[]			= "    dias rest   ";
 
 
 
@@ -57,6 +57,14 @@ void display_incubator_canceling_confirmation(){
 	LCD_out(1,0,Incubator_interface_cancel_confirmation_line_1);
     LCD_out(2,0,Incubator_interface_cancel_confirmation_line_2);
 }
+
+
+void display_incubation_ready(){
+	LCD_out(1,0,"     PROCESO    ");
+	LCD_out(2,0,"    TERMINADO   ");
+}
+
+
 
 void display_datetime_setting(DateTime datetime, char position){
 	char selector_str[]    	= "               ";

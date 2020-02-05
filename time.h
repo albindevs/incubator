@@ -12,6 +12,7 @@ char leap_years_until_2050[] = {20,24,28,32,36,40,44,48,52};
 void interface_set_datetime();
 
 DateTime calculate_date_when_n_days_passed(DateTime current_datetime, char days);
+__bit compare_datetimes(DateTime x, DateTime y);
 
 
 #endif

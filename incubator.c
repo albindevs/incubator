@@ -8,7 +8,7 @@
 char selector;
 char incubation_process_status = 0;
 AmbientVariables ambient_variables;
-DateTime current_date, final_date;
+DateTime current_datetime, final_datetime;
 IncubationParameters incubation_parameters;
 
 char egg_type;
@@ -51,15 +51,15 @@ void incubation_program(){
 		        	Write_b_eep(ADDRESS_SPINNING_DURATION, SPINNIG_DURATION_IN_MINUTES);
     				Busy_eep();
 
-    				current_date = rtc_get_datetime();
-    				final_date = calculate_date_when_n_days_passed(current_date, incubation_parameters.incubation_days);
-    				Write_b_eep(ADDRESS_DATE_TO_FINISH, final_date.date);
+    				current_datetime = rtc_get_datetime();
+    				final_datetime = calculate_date_when_n_days_passed(current_datetime, incubation_parameters.incubation_days);
+    				Write_b_eep(ADDRESS_DATE_TO_FINISH, final_datetime.date);
     				Busy_eep();
-    				Write_b_eep(ADDRESS_MONTH_TO_FINISH, final_date.month);
+    				Write_b_eep(ADDRESS_MONTH_TO_FINISH, final_datetime.month);
     				Busy_eep();
-    				Write_b_eep(ADDRESS_YEAR_TO_FINISH, final_date.year);
+    				Write_b_eep(ADDRESS_YEAR_TO_FINISH, final_datetime.year);
     				Busy_eep();
-    				Write_b_eep(ADDRESS_HOUR_TO_FINISH, final_date.hours);
+    				Write_b_eep(ADDRESS_HOUR_TO_FINISH, final_datetime.hours);
     				Busy_eep();
 
 					run_incubator();
@@ -97,27 +97,54 @@ void run_incubator(){
     spinnig_duration_in_minutes = Read_b_eep(ADDRESS_SPINNING_DURATION);
     Busy_eep();
 
-    final_date.date = Read_b_eep(ADDRESS_DATE_TO_FINISH);
+    final_datetime.date = Read_b_eep(ADDRESS_DATE_TO_FINISH);
 	Busy_eep();
-	final_date.month = Read_b_eep(ADDRESS_MONTH_TO_FINISH);
+	final_datetime.month = Read_b_eep(ADDRESS_MONTH_TO_FINISH);
 	Busy_eep();
-	final_date.year = Read_b_eep(ADDRESS_YEAR_TO_FINISH);
+	final_datetime.year = Read_b_eep(ADDRESS_YEAR_TO_FINISH);
 	Busy_eep();
-	final_date.hours = Read_b_eep(ADDRESS_HOUR_TO_FINISH);
+	final_datetime.hours = Read_b_eep(ADDRESS_HOUR_TO_FINISH);
 	Busy_eep();
 
 
 
     while(incubation_process_status){
     	ambient_variables = dht_get_ambient_vars();
+    	current_datetime = rtc_get_datetime();
+
     	display_Ambient_variables_in_first_line(ambient_variables);
     	display_days_left_in_second_line(incubation_days);
+    	
+    	if (compare_datetimes(current_datetime, final_datetime)){
+    		display_incubation_ready();
+    		Write_b_eep(ADDRESS_INCUBATION_PROCESS_STATUS, 0);
+			Busy_eep();
+			incubation_process_status = Read_b_eep(ADDRESS_INCUBATION_PROCESS_STATUS);
+			Busy_eep();
+			while(1){
+			    if (OK_BUTTON == 1){
+			        __delay_ms(WAIT_TIME_MS);
+			        if (OK_BUTTON == 1){
+			        	break;
+			        }
+			    }
+				
+			    if (BACK_BUTTON == 1){
+			        __delay_ms(WAIT_TIME_MS);
+			        if (BACK_BUTTON == 1){
+			        	break;
+			        }
+			    }
+			}
+    	}
+
 
     	__delay_ms(2000);
 	    if (BACK_BUTTON == 1){
 	        __delay_ms(WAIT_TIME_MS);
 	        if (BACK_BUTTON == 1){
 	        	display_incubator_canceling_confirmation();
+	        	__delay_ms(1000);
 	        	while(1){
 				    if (OK_BUTTON == 1){
 				        __delay_ms(WAIT_TIME_MS);

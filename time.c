@@ -156,3 +156,11 @@ DateTime calculate_date_when_n_days_passed(DateTime current_datetime, char days)
 
     return datetime;
 }
+
+__bit compare_datetimes(DateTime x, DateTime y){
+    if (x.year  != y.year) return 0;
+    if (x.month != y.month) return 0;
+    if (x.date  != y.date) return 0;
+    if (x.hours != y.hours) return 0;
+    return 1;
+}

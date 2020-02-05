@@ -15,9 +15,12 @@ void display_menu(char selector);
 void display_interface(AmbientVariables av, DateTime datetime);
 
 void display_incubator_selection();
+
 void display_Ambient_variables_in_first_line(AmbientVariables av);
 void display_days_left_in_second_line(char days);
+
 void display_incubator_canceling_confirmation();
+void display_incubation_ready();
 
 void display_datetime_setting(DateTime datetime, char position);
 
