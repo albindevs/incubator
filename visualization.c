@@ -3,16 +3,25 @@
 #include "sensor_temp_humidity_dht.h"
 #include "visualization.h"
 
-char Menu_selection_1[] 		= " Incubadora    ";
-char Menu_selection_2[]			= " Config fecha  ";
+char Menu_selection_1[] 			= " Incubadora    ";
+char Menu_selection_2[]				= " Config fecha  ";
 
-char Temperature_str[]      	= "Temp = 00.0 C  ";
-char Humidity_str[]        	 	= "RH   = 00.0 %  ";
+char Incubator_selection_line_1[]	= "> Huevos de    ";
+char Incubator_selection_line_2[]  	= "   Gallina     ";
 
-char DateTime_str[]    			= "  /  /     :   ";
+char Incubator_interface_line_1[]	= "  Incubating   ";
+char Incubator_interface_line_2[]	= "     days left";
 
-char Incubator_info_line_1[]	= "  Incubadora   ";
-char Incubator_info_line_2[]  	= "               ";
+char Incubator_interface_cancel_confirmation_line_1[]	= "  ¿cancelar?   ";
+char Incubator_interface_cancel_confirmation_line_2[]  	= "  OK     Atras ";
+
+
+char DateTime_str[]    				= "  /  /     :   ";
+
+char Temperature_str[]      		= "Temp = 00.0 C  ";
+char Humidity_str[]        	 		= "RH   = 00.0 %  ";
+
+
 
 void display_menu(char selector){
 	if (selector == 0)
@@ -37,9 +46,23 @@ void display_interface(AmbientVariables av, DateTime datetime){
     LCD_out(2,0,DateTime_str);
 }
 
-void display_incubator_interface(){
-	LCD_out(1,0,Incubator_info_line_1);
-    LCD_out(2,0,Incubator_info_line_2);
+void display_incubator_selection(){
+	LCD_out(1,0,Incubator_selection_line_1);
+    LCD_out(2,0,Incubator_selection_line_2);
+}
+
+void display_incubator_interface(char days){
+
+	Incubator_interface_line_2[2] = (days / 10) % 10  + '0';
+	Incubator_interface_line_2[3] = (days % 10) + '0';
+
+	LCD_out(1,0,Incubator_interface_line_1);
+    LCD_out(2,0,Incubator_interface_line_2);
+}
+
+void display_incubator_canceling_confirmation(){
+	LCD_out(1,0,Incubator_interface_cancel_confirmation_line_1);
+    LCD_out(2,0,Incubator_interface_cancel_confirmation_line_2);
 }
 
 void display_datetime_setting(DateTime datetime, char position){
