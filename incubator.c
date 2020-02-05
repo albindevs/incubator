@@ -17,8 +17,6 @@ char incubation_days;
 int normal_temperature;
 int normal_humidity;
 int normal_humidity_last_3_days;
-char time_to_spin_in_hours;
-char spinnig_duration_in_minutes;
 
 void incubation_program(){
 	incubation_process_status = Read_b_eep(ADDRESS_INCUBATION_PROCESS_STATUS);
@@ -44,12 +42,7 @@ void incubation_program(){
 		        	incubation_parameters = get_incubation_parameters_by_egg_type(CHICKEN_EGG);
 		        	Write_b_eep(ADDRESS_EGG_TYPE, CHICKEN_EGG);
     				Busy_eep();
-
 		        	Write_b_eep(ADDRESS_INCUBATION_DAYS, incubation_parameters.incubation_days);
-    				Busy_eep();
-		        	Write_b_eep(ADDRESS_TIME_TO_SPIN, TIME_TO_SPIN_IN_HOURS);
-    				Busy_eep();
-		        	Write_b_eep(ADDRESS_SPINNING_DURATION, SPINNIG_DURATION_IN_MINUTES);
     				Busy_eep();
 
     				current_datetime = rtc_get_datetime();
@@ -92,10 +85,6 @@ void run_incubator(){
     normal_humidity_last_3_days = incubation_parameters.normal_humidity_last_3_days;
 
     incubation_days = Read_b_eep(ADDRESS_INCUBATION_DAYS);
-    Busy_eep();
-    time_to_spin_in_hours = Read_b_eep(ADDRESS_TIME_TO_SPIN);
-    Busy_eep();
-    spinnig_duration_in_minutes = Read_b_eep(ADDRESS_SPINNING_DURATION);
     Busy_eep();
 
     final_datetime.date = Read_b_eep(ADDRESS_DATE_TO_FINISH);
