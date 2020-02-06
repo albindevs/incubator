@@ -4,6 +4,7 @@
 #include "real_time_clock.h"
 #include "time.h"
 #include "incubator.h"
+#include "temperature_control.h"
 
 char selector;
 char incubation_process_status = 0;
@@ -132,6 +133,7 @@ void run_incubator(){
 			}
     	}
 
+		regulate_temperature(ambient_variables.temperature, normal_temperature);
 
 		if (current_datetime.hours == 0 || current_datetime.hours == 6 || current_datetime.hours == 12 || current_datetime.hours == 18)
 		{

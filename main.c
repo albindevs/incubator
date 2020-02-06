@@ -13,6 +13,7 @@
 
 #include <xc.h>
 #include <delays.h>
+#include <plib/timers.h>
 #include "conf(8MHzINT2550).h"
 #include "buttons.h"
 #include "lcd.h"
@@ -32,16 +33,25 @@ void blinkLED() {
     __delay_ms(500);
 }
 
+
 void ports_configuration(){
     OSCCON  = 0b01110010;// intern oscilator 8MHz
     ADCON1  = 0X0F;
     TRISA   = 0;
     TRISB   = 0;
-    TRISC   = 0x0E;
+    TRISC   = 0b01110011;
     PORTC   = 0;
     T1CON   = 0x10; // set Timer1 clock source to internal with 1:2 prescaler (Timer1 clock = 1MHz)
     TMR1H   = 0;           
     TMR1L   = 0;
+}
+
+void PWM1_Init()
+{
+    CCP1CON = 0b00001100;   // Enable PWM on CCP1
+    T2CON = 0b00000111;     // Enable TMR2 with prescaler = 1
+    PR2 = 0b01111100;       // PWM period = (PR2+1) * prescaler * Tcy = 1ms
+    CCPR1L = 25; // pulse width = CCPR1L * prescaler * Tcy = 100us     /* Timer ON for start counting*/
 }
 
 void program(){
@@ -73,6 +83,7 @@ void main(void) {
     OpenXLCD(FOUR_BIT & LINES_5X7);
     LCD_cursor_off();
     rtc_start();
+    PWM1_Init();
     __delay_ms(1000);
 
     while (1) {

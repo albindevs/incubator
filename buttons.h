@@ -10,12 +10,14 @@
 
 #define OK_BUTTON       PORTCbits.RC1
 #define OK_BUTTON_DIR   TRISCbits.RC1
-#define BACK_BUTTON     PORTCbits.RC2
-#define BACK_BUTTON_DIR TRISCbits.RC2
+#define BACK_BUTTON     PORTCbits.RC6
+#define BACK_BUTTON_DIR TRISCbits.RC6
 #define UP_BUTTON       PORTCbits.RC4
 #define UP_BUTTON_DIR   TRISCbits.RC4
 #define DOWN_BUTTON     PORTCbits.RC5
 #define DOWN_BUTTON_DIR TRISCbits.RC5
+
+#define BUZZER          PORTBbits.RB4
 
 #define WAIT_TIME_MS 150
 
