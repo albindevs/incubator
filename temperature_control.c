@@ -21,15 +21,18 @@ void regulate_temperature(int temperature , int normal_temperature){
     {
         pwm_value--;
         CCPR1L = pwm_value;
+        FAN_CIRCULACION = 1;
     }
 
     if (temperature < normal_temperature && pwm_value < 110)
     {
         pwm_value++;
         CCPR1L = pwm_value;
+        FAN_CIRCULACION = 0;
+
     }
 
-    if(temperature > 450 || temperature < 320){
+    if(temperature > 395 || temperature < 360){
         BUZZER = 1;
         LCD_clr();
         LCD_out(1,0," RANGO DE TEMP  ");
@@ -37,7 +40,15 @@ void regulate_temperature(int temperature , int normal_temperature){
         __delay_ms(100);
     }else {
         BUZZER = 0;
+        FAN_EXTRACION = 0;
     }
     
+    if(temperature > 390){
+        pwm_value = 10;
+        CCPR1L = pwm_value;
+        FAN_EXTRACION = 1;
+
+    }
+        
     
 }

@@ -17,7 +17,9 @@
 #define DOWN_BUTTON     PORTCbits.RC5
 #define DOWN_BUTTON_DIR TRISCbits.RC5
 
-#define BUZZER          PORTBbits.RB4
+#define BUZZER          	PORTBbits.RB4
+#define FAN_CIRCULACION     PORTBbits.RB3
+#define FAN_EXTRACION       PORTBbits.RB6
 
 #define WAIT_TIME_MS 150
 
